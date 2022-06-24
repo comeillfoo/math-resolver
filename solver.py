@@ -14,10 +14,17 @@ def main(variant):
 
         with EnumerateEnvironment(document) as enumerate:
             enumerate.new_item('Записать первые 3 члена ряда:')
-            with series_1_10_first3(enumerate, N=variant) as align:
+            with solve_task(enumerate, task=1, N=variant) as task1:
                 pass
 
             enumerate.new_item('Записать сумму в свернутом виде с общим членом ряда:')
+            with solve_task(enumerate, task=2, N=variant) as task2:
+                pass
+
+            JustText(enumerate).content('Исследовать ряд на сходимость используя...')
+            enumerate.new_item('...необходимое условие')
+            with solve_task(enumerate, task=3, N=variant) as task3:
+                pass
 
 
 if __name__ == '__main__':

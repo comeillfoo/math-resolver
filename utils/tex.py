@@ -1,6 +1,17 @@
 from sys import stdout
 
 
+class JustText():
+    def __init__(self, _parent, _out = stdout):
+        self.indent = 0 if _parent == None else _parent.indent + 1
+        self.out = _out
+
+
+    def content(self, contentText):
+        print('  ' * self.indent, end = '', file = self.out)
+        print(contentText, file = self.out)   
+
+
 class TexEnvironment:
     def __init__(self, _parent, _name = "section", _out = stdout):
         self.indent = 0 if _parent == None else _parent.indent + 1
@@ -21,8 +32,8 @@ class TexEnvironment:
 
 
     def content(self, contentText):
-        print( '  ' * (self.indent + 1), end = '' )
-        print( contentText )
+        print('  ' * (self.indent + 1), end = '', file = self.out)
+        print(contentText, file = self.out)
 
 
 class TexCommand:
@@ -48,11 +59,6 @@ class TexCommand:
 
     def __exit__(self, type, value, traceback):
         print()
-
-
-    def content(self, contentText):
-        print( '  ' * (self.indent + 1), end = '' )
-        print( contentText )
 
 
 class ItemizeEnvironment(TexEnvironment):
