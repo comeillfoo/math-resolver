@@ -13,16 +13,22 @@ class JustText():
 
 
 class TexEnvironment:
-    def __init__(self, _parent, _name = "section", _out = stdout):
+    def __init__(self, _parent, _name = "section",  _attr = None, _out = stdout):
         self.indent = 0 if _parent == None else _parent.indent + 1
         self.name = _name
         self.out = _out
+        self.attr = _attr
 
 
     def __enter__(self):
         print('  ' * self.indent, end = '', file = self.out)
         print('\\begin{%s' % self.name, end = '', file = self.out)
-        print('}', file = self.out )
+        print('}', end = '', file = self.out )
+        if self.attr:
+            print('[', end = '', file = self.out)
+            print(','.join([f'{attr}' for attr in self.attr]), end = '', file = self.out)
+            print(']', end = '', file = self.out)
+        print()
         return self
 
 
@@ -62,8 +68,8 @@ class TexCommand:
 
 
 class ItemizeEnvironment(TexEnvironment):
-    def __init__(self, _parent = None, _out=stdout):
-        super().__init__(_parent, 'itemize', _out)
+    def __init__(self, _parent = None, _attr = None, _out=stdout):
+        super().__init__(_parent, 'itemize', _attr, _out)
 
 
     def new_item(self, contentText):
@@ -73,8 +79,8 @@ class ItemizeEnvironment(TexEnvironment):
 
 
 class EnumerateEnvironment(TexEnvironment):
-    def __init__(self, _parent = None, _out=stdout):
-        super().__init__(_parent, 'enumerate', _out)
+    def __init__(self, _parent = None, _attr = None, _out=stdout):
+        super().__init__(_parent, 'enumerate', _attr, _out)
 
 
     def new_item(self, contentText):
@@ -84,8 +90,8 @@ class EnumerateEnvironment(TexEnvironment):
 
 
 class AlignStarEnvironment(TexEnvironment):
-    def __init__(self, _parent = None, _out=stdout):
-        super().__init__(_parent, 'align*', _out)
+    def __init__(self, _parent = None, _attr = None, _out=stdout):
+        super().__init__(_parent, 'align*', _attr, _out)
         self.equations = []
 
 
