@@ -78,6 +78,95 @@ def find_set(subtask, U, X, Y, Z):
     subtask.new_item('$ (X \\backslash Z)\\cup (Y\\backslash Z) = \\set%s $' % str(t0))
 
 
+def common_solution_difeq_1(align = AlignStarEnvironment(), N=1):
+    align.new_mathline('\\text{Находим общее решение однородного уравнения:}&')
+    align.new_mathline('y\' + %dxy &= 0' % N)
+    align.new_mathline('\\int\\frac{dy}{y} &= -%d\\int xdx' % N)
+    align.new_mathline('\\ln{|y|} &= -%fx^2 + C_0' % (N / 2))
+    align.new_mathline('\\text{Выражаем константу:}&')
+    align.new_mathline('y(x) &= C(x)e^{-%.2fx^2}' % (N / 2))
+    align.new_mathline('C\'(x)e^{-%.2fx^2} - %.2fxC(x)e^{-%.2fx^2} + %.2fxC(x)e^{-%.2fx^2} &= xe^{-x^2}' % (N / 2, N, N / 2, N, N / 2))
+    align.new_mathline('C\'(x)e^{-%.2fx^2} &= xe^{-x^2}' % (N / 2))
+    align.new_mathline('C\'(x) &= xe^{%.2fx^2}' % (N / 2 - 1))
+    align.new_mathline('\\int dC(x) &= \\int xe^{%.2fx^2}dx' % (N / 2 - 1))
+    align.new_mathline('C(x) &= \\frac{e^{%.2fx^2}}{%.2f} + c_0' % (N / 2 - 1, 2 * (N / 2 - 1)))
+    align.new_mathline('\\text{Итого:}&')
+    align.new_mathline('y(x) &= \\frac{1}{%.2f}e^{-x^2} + c_0e^{-%.2fx^2}' % (2 * (N / 2 - 1), N / 2))
+
+
+def common_solution_difeq_2(align = AlignStarEnvironment(), N = 1):
+    align.new_mathline('y\'x\\ln{x} - \\ln{x} &= %dy' % (N + 1))
+    align.new_mathline('y\' - \\frac{1}{x} &= \\frac{%dy}{x\\ln{x}}' % (N + 1))
+    align.new_mathline('y\' - \\frac{%dy}{x\\ln{x}} &= \\frac{1}{x}' % (N + 1))
+    align.new_mathline('\\text{Находим общее решение однородного уравнения:}&')
+    align.new_mathline('y\' - \\frac{%dy}{x\\ln{x}} &= 0' % (N + 1))
+    align.new_mathline('\\int\\frac{dy}{%dy} &= \\int\\frac{dx}{x\\ln{x}} + C_0' % (N + 1))
+    align.new_mathline('\\frac{1}{%d}\\ln{y} &= \\int\\frac{d(\\ln{x})}{\\ln{x}} + C_0' % (N + 1))
+    align.new_mathline('\\frac{1}{%d}\\ln{y} &= \\ln{\\ln{x}} + C_0' % (N + 1))
+    align.new_mathline('\\ln{y} &= %d\\ln{\\ln{x}} + C_1' % (N + 1))
+    align.new_mathline('y(x) &= C(x)\\ln^{%d}{x}' % (N + 1) )
+    align.new_mathline('\\text{Выражаем константу:}&')
+    align.new_mathline('xC\'(x)\\ln^{%d}{x} + %dC(x)\\ln^{%d}{x} - \\ln{x} &= %dC(x)\\ln^{%d}{x}' % (N + 2, N + 1, N + 1, N + 1, N + 1))
+    align.new_mathline('xC\'(x)\\ln^{%d}{x} &= 1' % (N + 1))
+    align.new_mathline('\\int dC(x) &= \\int\\frac{dx}{x\\ln^{%d}{x}}' % (N + 1))
+    align.new_mathline('C(x) &= \\int\\frac{d(\\ln{x})}{\\ln^{%d}{x}} + c' % (N + 1))
+    align.new_mathline('C(x) &= -\\frac{1}{%d\\ln^{%d}{x}} + c' % (N, N))
+    align.new_mathline('\\text{Итого:}&')
+    align.new_mathline('y(x) &= -\\frac{1}{%d}\\ln{x} + c\\ln^{%d}{x}' % (N, N + 1))
+
+
+def common_solution_difeq_3(align = AlignStarEnvironment(), N = 1):
+    align.new_mathline('\\text{Находим общее решение однородного уравнения:}&')
+    align.new_mathline('y\' + 2y &= 0')
+    align.new_mathline('\\int\\frac{dy}{y} &= -2\\int dx')
+    align.new_mathline('\\ln{y} &= -2x + C_0')
+    align.new_mathline('y(x) &= C(x)e^{-2x}')
+    align.new_mathline('\\text{Выражаем константу:}&')
+    align.new_mathline('C\'(x)e^{-2x} - 2e^{-2x}C(x) + 2e^{-2x}C(x) &= %dx' % N)
+    align.new_mathline('C\'(x)e^{-2x} &= %dx' % N)
+    align.new_mathline('\\int dC(x) &= %d\\int xe^{2x}dx + c_0' % N)
+    align.new_mathline('C(x) &= %.2fe^{2x}(2x - 1) + c' % (N / 4))
+    align.new_mathline('\\text{Итого:}&')
+    align.new_mathline('y(x) &= %.2fx - %.2f) + ce^{-2x}' % (N / 2, N / 4))
+
+
+def partial_solution_difeq_1(align = AlignStarEnvironment(), N = 1):
+    align.new_mathline('\\text{Находим общее решение однородного уравнения:}&')
+    align.new_mathline('y\' - y\\cot{x} &= 0')
+    align.new_mathline('\\int\\frac{dy}{y} &= \\int\\cot{x}dx')
+    align.new_mathline('\\ln{y} &= \\ln{\\sin{x}} + C_0')
+    align.new_mathline('y(x) &= C(x)\\sin{x}')
+    align.new_mathline('\\text{Выражаем константу:}&')
+    align.new_mathline('C\'(x)\\sin{x} + C(x)\\cos{x} - C(x)\\cos{x} &= %dx\\sin{x}' % N)
+    align.new_mathline('C\'(x) &= %dx' % N)
+    align.new_mathline('\\int dC(x) &= %d\\int xdx' % N)
+    align.new_mathline('C(x) &= %.2fx^2 + c_0' % (N / 2))
+    align.new_mathline('\\text{Итого:}&')
+    align.new_mathline('y(x) &= %.2fx^2\\sin{x} + c_0\\sin{x}' % (N / 2))
+    align.new_mathline('\\text{Находим частное решение:}&')
+    align.new_mathline('y(\\frac{\\pi}{2}) &= 0 = %.2f\\pi^2 + c_0' % (N / 8))
+    align.new_mathline('c_0 &= -%.2f\\pi^2' % (N / 8))
+    align.new_mathline('y(x) &= %.2fx^2\\sin{x} - %.2f\\pi^2\\sin{x}' % (N / 2, N / 8))
+
+
+def partial_solution_difeq_2(align = AlignStarEnvironment(), N = 1):
+    align.new_mathline('\\text{Находим общее решение однородного уравнения:}&')
+    align.new_mathline('y\' &= %dx' % (N - 2))
+    align.new_mathline('\\int dy &= %d\\int xdx' % (N - 2))
+    align.new_mathline('y &= %.2fx^2 + c_0' % (N / 2 - 1))
+    align.new_mathline('\\text{Находим частное решение:}&')
+    align.new_mathline('y(1) &= 4 = %.2f + c_0' % (N / 2 - 1))
+    align.new_mathline('c_0 &= %.2f' % (5 - N / 2))
+    align.new_mathline('y(x) &= %.2fx^2 + %.2f' % (N / 2 - 1, 5 - N / 2))
+
+
+def common_solution_difeq_4(align = AlignStarEnvironment(), N = 1):
+    align.new_mathline('(%d + %dy^2)xdx &= (%dx^2 + %d)ydy' % (N, N - 3, N - 4, N))
+    align.new_mathline('\\int\\frac{xdx}{%dx^2 + %d} &= \\int\\frac{ydy}{%d + %dy^2} + c_0' % (N - 4, N, N, N - 3))
+    align.new_mathline('\\frac{1}{%d}\\int\\frac{d(%dx^2 + %d)}{%dx^2 + %d} &= \\frac{1}{%d}\\int\\frac{d(%dy^2 + %d)}{%d + %dy^2} + c_0' % (N - 4, N - 4, N, N - 4, N, N - 3, N - 3, N, N, N - 3))
+    align.new_mathline('\\frac{1}{%d}\\ln{%dx^2 + %d} &= \\frac{1}{%d}\\ln{%dy^2 + %d} + c_0' % (N - 4, N - 4, N, N - 3, N - 3, N))
+
+
 def solve_task(_parent=None, _out=stdout, task=1, N=1):
     align = AlignStarEnvironment(_parent, _out=_out)
     if task == 1:
@@ -92,6 +181,18 @@ def solve_task(_parent=None, _out=stdout, task=1, N=1):
         test_convergence_with_dalamber_1_10(align, N)
     elif task == 6:
         test_convergence_with_koshi_1_10(align, N)
+    elif task == 8:
+        common_solution_difeq_1(align, N)
+    elif task == 9:
+        common_solution_difeq_2(align, N)
+    elif task == 10:
+        common_solution_difeq_3(align, N)
+    elif task == 11:
+        partial_solution_difeq_1(align, N)
+    elif task == 12:
+        partial_solution_difeq_2(align, N)
+    elif task == 13:
+        common_solution_difeq_4(align, N)
 
     with align:
         pass
